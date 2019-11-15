@@ -153,30 +153,24 @@
                                 <td th:text="${app.pid}"></td>
                                 <td th:text="${app.appname}"></td>
                                 <td th:text="${app.applytime}"></td>
-                                <td th:switch="${app.checked}">
-                                    <div th:case="false">
-                                        <a data-uncheck="未审核" style="color: #1e88e5;">
-                                            <i class="fa fa-circle-o" style="margin-right: 5px;"></i>
-                                            未审核
-                                        </a>
-                                    </div>
-                                    <div th:case="true" th:switch="${app.allcheck}">
-                                        <div th:case="false">
-                                            <a data-fail="未通过" style="color: orangered;">
-                                                <i class="fa fa-exclamation-circle" style="margin-right: 5px;"></i>
-                                                审核未通过
-                                            </a>
-                                        </div>
-                                        <div th：case="true">
-                                            <a data-succ="通过" style="color: #5FB878;">
-                                                <i class="fa fa-check-circle" style="margin-right: 5px;"></i>
-                                                审核通过
-                                            </a>
-                                        </div>
-                                    </div>
+                                <td th:if="${app.checked == false}">
+                                    <a data-uncheck="未审核" style="color: #1e88e5;">
+                                        <i class="fa fa-circle-o" style="margin-right: 5px;"></i>
+                                        审核未完成
+                                    </a>
                                 </td>
+                                <td th:if="${app.checked == true} and ${app.allcheck == true}">
+                                    <a data-succ="通过" style="color: #5FB878;">
+                                        <i class="fa fa-check-circle" style="margin-right: 5px;"></i>
+                                        审核通过
+                                    </a>
                                 </td>
-<!--                            <td th:text="${app.allcheck}"></td>-->
+                                <td th:if="${app.checked == true} and ${app.allcheck == false}">
+                                    <a data-fail="未通过" style="color: orangered;">
+                                        <i class="fa fa-exclamation-circle" style="margin-right: 5px;"></i>
+                                        审核未通过
+                                    </a>
+                                </td>
                                 <td><a href="/404" data-msg="查看" style="color: #1e88e5;"><i class="fa fa-bar-chart" style="margin-right: 5px;"></i>查看</a></td>
                                 <td><a th:href="@{/main/checkapp?id={index}(index=${iterstat.count})}" data-edit="审核" style="color: #5FB878;"><i class="fa fa-edit" style="margin-right: 5px;"></i>审核</a></td>
                             </tr>
@@ -196,7 +190,7 @@
 <script src="../lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
 <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
 <script>
-    layui.use(['element', 'layer', 'layuimini'], function () {
+    layui.use(['element', 'layer'], function () {
         var $ = layui.jquery,
             element = layui.element,
             layer = layui.layer;

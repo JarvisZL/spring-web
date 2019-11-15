@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.net.UnknownServiceException;
 import java.nio.MappedByteBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,13 @@ public class HelloController {
     ProjectsService projectsService;
     public final static Logger logger = LoggerFactory.getLogger(HelloController.class);
     private String oldid = "",curid = "";
+    private int curpid = 0;
 
     @RequestMapping("/404")
     public String notfound(){
+        oldid = curid;
+        curid = "";
+        curpid = 0;
         return String.valueOf(404);
     }
 
@@ -42,6 +47,7 @@ public class HelloController {
     public String ToLogIn(){
         oldid = curid;
         curid = "";
+        curpid = 0;
         return "index";
     }
 
@@ -64,6 +70,7 @@ public class HelloController {
         else{
             oldid = curid;
             curid = userid;
+            curpid = 0;
             return "redirect:main";
         }
     }
@@ -74,6 +81,7 @@ public class HelloController {
         if(curid.equals("")){
             return "redirect:index";
         }
+        curpid = 0;
         HelloUser helloUser = userService.getOne(curid);
         assert(helloUser.getId() != null);
         model.addAttribute("name",helloUser.getName());
@@ -89,10 +97,11 @@ public class HelloController {
         if(curid.equals("")){
             return "redirect:/index";
         }
+        curpid = 0;
         return "user";
     }
 
-    private List<Projects> applist;
+
 
     @GetMapping("/main/list")
     public ModelAndView mainTolist(){
@@ -100,9 +109,19 @@ public class HelloController {
         if(curid.equals("")){
             return new ModelAndView("redirect:/index", "applist", null);
         }
-        applist = projectsService.getByuid(curid);
+        curpid = 0;
+        List<Projects> applist = projectsService.getByuid(curid);
 
         return new ModelAndView("list","applist",applist);
+    }
+
+    @GetMapping("/main/help")
+    public String mainTohelp(){
+        if(curid.equals("")){
+            return "redirect:/index";
+        }
+        curpid = 0;
+        return "help";
     }
 
     @GetMapping("/main/checkapp")
@@ -111,11 +130,53 @@ public class HelloController {
         if(curid.equals("")){
             return new ModelAndView("redirect:/index", "app", null);
         }
-
+        List<Projects> applist = projectsService.getByuid(curid);
         Projects app = applist.get(id-1);
-
+        curpid = id;
         return new ModelAndView("checkapp","app",app);
+
     }
 
 
+    @RequestMapping("/main/submit")
+    public ModelAndView Tosubmit(String nameres,String catres, String saferes,String levelres){
+        //未登录先登录
+        if(curid.equals("")){
+            return new ModelAndView("redirect:/index", "app", null);
+        }
+
+        //save
+        if(nameres != null || catres != null || saferes != null || !levelres.equals("0")){
+            Savemsg(nameres,catres,saferes,levelres);
+        }
+
+
+        return new ModelAndView("redirect:checkapp?id="+curpid,"submsg",null);
+    }
+
+    private void Savemsg(String nameres,String catres, String saferes,String levelres){
+        boolean checked,allcheck = false,apncheck = false,apccheck = false,apscheck = false,aplcheck = false;
+        int applevel = 0;
+
+        checked = nameres != null || catres != null || saferes != null || !levelres.equals("0");
+
+        if(nameres != null){
+            apncheck = nameres.equals("ok");
+        }
+        if(catres != null){
+            apccheck = catres.equals("ok");
+        }
+        if(saferes != null){
+            apscheck = saferes.equals("ok");
+        }
+        aplcheck = !levelres.equals("0");
+        applevel = Integer.parseInt(levelres);
+
+        if(nameres != null && catres != null && saferes != null && !levelres.equals("0")){
+            allcheck = nameres.equals("ok") && catres.equals("ok") && saferes.equals("ok");
+        }
+        String pid = "p"+new DecimalFormat("000").format(curpid);
+
+        projectsService.UpdateStatbypid(checked,allcheck,apncheck,apccheck,apscheck,applevel,aplcheck,pid);
+    }
 }

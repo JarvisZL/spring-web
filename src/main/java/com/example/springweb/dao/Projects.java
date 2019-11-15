@@ -90,4 +90,31 @@ public class Projects implements Serializable {
 
     /* ---------- set msg ----------*/
 
+    public void setApplevel(int applevel) {
+        this.applevel = applevel;
+    }
+
+    public void setApscheck(boolean apscheck) {
+        this.apscheck = apscheck;
+    }
+
+    public void setAplcheck(boolean aplcheck) {
+        this.aplcheck = aplcheck;
+    }
+
+    public void setApncheck(boolean apncheck) {
+        this.apncheck = apncheck;
+    }
+
+    public void setApccheck(boolean apccheck) {
+        this.apccheck = apccheck;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public void setAllcheck(boolean allcheck) {
+        this.allcheck = allcheck;
+    }
 }
