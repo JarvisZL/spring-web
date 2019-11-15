@@ -56,7 +56,11 @@ public class UserService {
         if(params.get("name")!=null)
             temp.setName(params.get("name"));
         if(params.get("password")!=null)
-            temp.setPassword((params.get("password")));
+            temp.setPassword(params.get("password"));
+        if(params.get("contact") != null)
+            temp.setContact(params.get("contact"));
+        if(params.get("remark") != null)
+            temp.setRemark(params.get("remark"));
         userMapper.updateByID(temp);
     }
 

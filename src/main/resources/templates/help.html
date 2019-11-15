@@ -36,7 +36,6 @@
             <li class="layui-nav-item">
                 <a><i class="fa fa-list-ul"></i> 选择模块</a>
                 <dl class="layui-nav-child layui-header-mini-menu">
-                    <dd><a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a> </dd>
                     <dd><a href="/main/help"><i class="fa fa-question-circle"></i></a> </dd>
 
                 </dl>
@@ -44,9 +43,6 @@
         </ul>
 
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
-            </li>
             <li class="layui-nav-item">
                 <a href="/main/help"><i class="fa fa-question-circle"></i></a>
             </li>
@@ -58,15 +54,11 @@
         <div class="layui-side-scroll layui-left-menu">
             <ul class="layui-nav layui-nav-tree layui-inline" style="width: 90%">
                 <li class="layui-nav-item:first-child layui-nav-item" style="width: 100%;">
-                    <a><label class="layui-icon layui-icon-username" style="padding-right: 5px;"></label>用户</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="/main/user"> 用户资料</a></dd>
-                        <dd><a href="/404"> 账户管理</a></dd>
-                    </dl>
+                    <a href="/main/user"><label class="layui-icon layui-icon-username" style="padding-right: 5px;"></label>账户信息</a>
                 </li>
                 <li class="layui-nav-item">
                     <!--                    显示具体项目-->
-                    <a href="/main/List">
+                    <a href="/main/list">
                         <label class="layui-icon layui-icon-layer" style="padding-right: 5px;">
                         </label>
                         审核项目列表

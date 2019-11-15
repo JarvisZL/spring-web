@@ -17,7 +17,9 @@ import java.net.UnknownServiceException;
 import java.nio.MappedByteBuffer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HelloController {
@@ -27,13 +29,15 @@ public class HelloController {
     ProjectsService projectsService;
     public final static Logger logger = LoggerFactory.getLogger(HelloController.class);
     private String oldid = "",curid = "";
-    private int curpid = 0;
+    private String curpid = "";//curappid 对应的pid
+    private int curappid = 0;//checkapp?id = curappid
 
     @RequestMapping("/404")
     public String notfound(){
         oldid = curid;
         curid = "";
-        curpid = 0;
+        curpid = "";
+        curappid = 0;
         return String.valueOf(404);
     }
 
@@ -47,7 +51,8 @@ public class HelloController {
     public String ToLogIn(){
         oldid = curid;
         curid = "";
-        curpid = 0;
+        curpid = "";
+        curappid = 0;
         return "index";
     }
 
@@ -70,7 +75,8 @@ public class HelloController {
         else{
             oldid = curid;
             curid = userid;
-            curpid = 0;
+            curpid = "";
+            curappid = 0;
             return "redirect:main";
         }
     }
@@ -81,7 +87,8 @@ public class HelloController {
         if(curid.equals("")){
             return "redirect:index";
         }
-        curpid = 0;
+        curpid = "";
+        curappid = 0;
         HelloUser helloUser = userService.getOne(curid);
         assert(helloUser.getId() != null);
         model.addAttribute("name",helloUser.getName());
@@ -92,16 +99,17 @@ public class HelloController {
     }
 
     @GetMapping("/main/user")
-    public String mainTouser(){
+    public ModelAndView mainTouser(){
         //未登录先登录
         if(curid.equals("")){
-            return "redirect:/index";
+            return new ModelAndView("redirect:/index","user",null);
         }
-        curpid = 0;
-        return "user";
+        curpid = "";
+        curappid = 0;
+        HelloUser user = userService.getOne(curid);
+        assert(user.getId()!=null);
+        return new ModelAndView("user","user",user);
     }
-
-
 
     @GetMapping("/main/list")
     public ModelAndView mainTolist(){
@@ -109,7 +117,8 @@ public class HelloController {
         if(curid.equals("")){
             return new ModelAndView("redirect:/index", "applist", null);
         }
-        curpid = 0;
+        curpid = "";
+        curappid = 0;
         List<Projects> applist = projectsService.getByuid(curid);
 
         return new ModelAndView("list","applist",applist);
@@ -120,7 +129,8 @@ public class HelloController {
         if(curid.equals("")){
             return "redirect:/index";
         }
-        curpid = 0;
+        curpid = "";
+        curappid = 0;
         return "help";
     }
 
@@ -132,11 +142,11 @@ public class HelloController {
         }
         List<Projects> applist = projectsService.getByuid(curid);
         Projects app = applist.get(id-1);
-        curpid = id;
+        curpid = app.getPid();
+        curappid = id;
         return new ModelAndView("checkapp","app",app);
 
     }
-
 
     @RequestMapping("/main/submit")
     public ModelAndView Tosubmit(String nameres,String catres, String saferes,String levelres){
@@ -151,7 +161,7 @@ public class HelloController {
         }
 
 
-        return new ModelAndView("redirect:checkapp?id="+curpid,"submsg",null);
+        return new ModelAndView("redirect:checkapp?id="+curappid,"submsg",null);
     }
 
     private void Savemsg(String nameres,String catres, String saferes,String levelres){
@@ -175,8 +185,29 @@ public class HelloController {
         if(nameres != null && catres != null && saferes != null && !levelres.equals("0")){
             allcheck = nameres.equals("ok") && catres.equals("ok") && saferes.equals("ok");
         }
-        String pid = "p"+new DecimalFormat("000").format(curpid);
+        String pid = curpid;
 
         projectsService.UpdateStatbypid(checked,allcheck,apncheck,apccheck,apscheck,applevel,aplcheck,pid);
+    }
+
+    @RequestMapping("/main/changepass")
+    public String Tochangepass(Model model,String new_password){
+        //未登录先登录
+        if(curid.equals("")){
+            return "redirect:/index";
+        }
+
+        HelloUser user = userService.getOne(curid);
+        assert(user.getId()!= null);
+        user.setPassword(new_password);
+        Map<String,String> map = new HashMap<>();
+        map.put("id",user.getId());
+        map.put("name",user.getName());
+        map.put("password",user.getPassword());
+        map.put("contact",user.getContact());
+        map.put("remark",user.getRemark());
+        userService.UpdateByID(map);
+        return "redirect:user";
+
     }
 }
