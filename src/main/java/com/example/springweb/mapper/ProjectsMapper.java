@@ -19,7 +19,7 @@ public interface ProjectsMapper {
             @Result(property = "pid",column = "pid"),
             @Result(property = "uid",column = "uid"),
             @Result(property = "checked",column = "checked"),
-            @Result(property = "allcheck", column = "allchekc"),
+            @Result(property = "allcheck", column = "allcheck"),
             @Result(property = "applytime",column = "applytime"),
             @Result(property = "companyname",column = "companyname"),
             @Result(property = "appname",column = "appname"),
