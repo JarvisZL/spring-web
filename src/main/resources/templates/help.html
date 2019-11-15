@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
+    <title>HelpPage</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="../Pics/工业@2x.png">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/layuimini.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="layui-layout-body layuimini-all">
+<div class="layui-layout layui-layout-admin">
+
+    <div class="layui-header header">
+        <div class="layui-logo">
+            <a href="/main">
+                <img src="../Pics/工业@2x.png" style="margin: 0; width: 20%; padding: 0; ">
+                <h1>工业App分级系统</h1>
+            </a>
+        </div>
+
+        <ul class="layui-nav layui-layout-left layui-header-menu layui-header-pc-menu mobile layui-hide-xs">
+        </ul>
+        <ul class="layui-nav layui-layout-left layui-header-menu mobile layui-hide-sm">
+            <li class="layui-nav-item">
+                <a><i class="fa fa-list-ul"></i> 选择模块</a>
+                <dl class="layui-nav-child layui-header-mini-menu">
+                    <dd><a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a> </dd>
+                    <dd><a href="/main/help"><i class="fa fa-question-circle"></i></a> </dd>
+
+                </dl>
+            </li>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/main/help"><i class="fa fa-question-circle"></i></a>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll layui-left-menu">
+            <ul class="layui-nav layui-nav-tree layui-inline" style="width: 90%">
+                <li class="layui-nav-item:first-child layui-nav-item" style="width: 100%;">
+                    <a><label class="layui-icon layui-icon-username" style="padding-right: 5px;"></label>用户</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/main/user"> 用户资料</a></dd>
+                        <dd><a href="/404"> 账户管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <!--                    显示具体项目-->
+                    <a href="/main/List">
+                        <label class="layui-icon layui-icon-layer" style="padding-right: 5px;">
+                        </label>
+                        审核项目列表
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/index">
+                        <label class="layui-icon layui-icon-return" style="padding-right: 5px;">
+                        </label>
+                        退出登录
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div class="clildFrame">
+            <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show">
+                <div class="layui-collapse" lay-filter="test">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">使用指南</h2>
+                        <div class="layui-colla-content">
+                            <ul type="disc">
+                                <li>左侧边栏中用户按钮中可以选择查看本用户的相关资料或者对自己的账户进行某些操作，如更改密码。</li>
+                                <li>左侧边栏中审核项目列表可以跳转到本用户需要审核的APP列表界面。</li>
+                                <li>左侧边栏中退出登录即退出到登录界面，需重新登录使用系统。</li>
+                                <li>点击左上角图标或白色标题可以回到登录后的主界面。</li>
+                                <li>顶栏第一个为刷新按钮，可以刷新页面；第二个为使用指南按钮。</li>
+                                <li>点击登录后主界面也可以查看本用户需要审核的APP列表。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">菜鸡为什么要实现<a style="text-decoration: line-through">较多功能</a>花里胡哨的页面呢？</h2>
+                        <div class="layui-colla-content">
+                            <p>当然是为了<a style="font-weight: bolder; color: orangered;">加分！</a>助教多给点分吧orz。 </p>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">这么好<a style="text-decoration: line-through;">康</a>看的模板哪里找的？？</h2>
+                        <div class="layui-colla-content">
+                            <p>layui轻量级模板你值得拥有：<a href="https://www.layui.com/">https://www.layui.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use(['element', 'layer', 'layuimini'], function () {
+        var $ = layui.jquery,
+            element = layui.element,
+            layer = layui.layer;
+    });
+    //监听折叠
+    element.on('collapse(test)', function(data){
+        layer.msg('展开状态：'+ data.show);
+    });
+</script>
+</body>
+</html>

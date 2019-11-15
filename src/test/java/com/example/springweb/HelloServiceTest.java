@@ -1,7 +1,7 @@
 package com.example.springweb;
 
 import com.example.springweb.dao.HelloUser;
-import com.example.springweb.service.HelloService;
+import com.example.springweb.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class HelloServiceTest {
     @Autowired
-    HelloService helloService;
+    UserService helloService;
 
     @Test
     public void getUsers() {
