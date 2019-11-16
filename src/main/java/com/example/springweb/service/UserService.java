@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +18,18 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<HelloUser> getUserList() {
+        return userMapper.findAll();
+    }
+
+    public String getnextuid(){
         List<HelloUser> list = userMapper.findAll();
-        return list;
+        if(list.size() == 0){
+            return "u001";
+        }
+        list.sort(Comparator.comparing(HelloUser::getName));
+        String maxid = list.get(list.size()-1).getId().substring(1);
+        int maxnum = Integer.parseInt(maxid);
+        return "u"+new DecimalFormat("000").format(maxnum+1);
     }
 
     /*public void InsertUser(HelloUser helloUser){

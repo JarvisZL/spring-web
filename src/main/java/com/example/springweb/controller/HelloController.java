@@ -81,6 +81,29 @@ public class HelloController {
         }
     }
 
+    @RequestMapping("/register")
+    public String Toregister(){
+        return "register";
+    }
+
+    @RequestMapping("/SignUp")
+    public ModelAndView Tosignup(String username, String password,String again_password, String contact, String remark){
+        String tempid = userService.getOnebyname(username);
+        if(tempid != null){
+            return new ModelAndView("register","tips","该用户已存在。");
+        }
+
+        Map<String, String> map = new HashMap<>();
+        map.put("id",userService.getnextuid());
+        map.put("name",username);
+        map.put("password",password);
+        map.put("contact",contact);
+        map.put("remark",remark);
+        userService.InsertUser(map);
+
+        return new ModelAndView("register","tips","注册成功！");
+    }
+
     @RequestMapping("/main")
     public String Tomain(Model model){
         //未登录直接访问main页面会跳转到登录界面
@@ -159,9 +182,8 @@ public class HelloController {
         if(nameres != null || catres != null || saferes != null || !levelres.equals("0")){
             Savemsg(nameres,catres,saferes,levelres);
         }
-
-
-        return new ModelAndView("redirect:checkapp?id="+curappid,"submsg",null);
+        List<Projects> applist = projectsService.getByuid(curid);
+        return new ModelAndView("redirect:list","applist",applist);
     }
 
     private void Savemsg(String nameres,String catres, String saferes,String levelres){

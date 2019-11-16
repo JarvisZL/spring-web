@@ -74,9 +74,7 @@
             <li class="layui-nav-item">
                 <a><i class="fa fa-list-ul"></i> 选择模块</a>
                 <dl class="layui-nav-child layui-header-mini-menu">
-
                     <dd><a href="/main/help"><i class="fa fa-question-circle"></i></a> </dd>
-
                 </dl>
             </li>
         </ul>
@@ -224,6 +222,7 @@
                             <td>
                                 <select class="layui-form-select input" name="levelres" lay-verify="">
                                     <option value="0">请选择符合等级</option>
+                                    <option value="-1">不合格，无法评级</option>
                                     <option value="1">一级</option>
                                     <option value="2">二级</option>
                                     <option value="3">三级</option>
@@ -240,7 +239,7 @@
                         <script th:inline="javascript">
                             var submsg = [[${submsg}]];
                         </script>
-                        <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login" style="background-color:rgb(102,153,204); width: 10%; margin-left: 30%;">保存提交</button>
+                        <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="save" style="background-color:rgb(102,153,204); width: 10%; margin-left: 30%;">保存提交</button>
                     </div>
                 </form>
 
@@ -253,13 +252,29 @@
 <script src="../lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
 <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
 <script>
-    layui.use(['element', 'layer','table'], function () {
+    layui.use(['element', 'layer','table','form'], function () {
         var table = layui.table;
             table.render();
             $ = layui.jquery,
             element = layui.element,
             layer = layui.layer;
-
+            form = layui.form;
+        form.on('submit(save)',function (data) {
+            data = data.field;
+            if(data.nameres == null || data.catres == null || data.saferes == null || data.levelres == "0"){
+                layer.msg("审核未完成，请继续审核",function () {
+                });
+                return false;
+            }
+            else{
+                layer.msg("审核提交完成。",function () {
+                    function r() {
+                        return true;
+                    }
+                    window.setTimeout(r,3000);
+                });
+            }
+        })
     });
 </script>
 </body>

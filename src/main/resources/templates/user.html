@@ -74,13 +74,16 @@
             <li class="layui-nav-item">
                 <a><i class="fa fa-list-ul"></i> 选择模块</a>
                 <dl class="layui-nav-child layui-header-mini-menu">
+                    <dd><a href="/main/user"><i class="fa fa-refresh"></i></a></dd>
                     <dd><a href="/main/help"><i class="fa fa-question-circle"></i></a> </dd>
-
                 </dl>
             </li>
         </ul>
 
         <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="/main/user"><i class="fa fa-refresh"></i></a>
+            </li>
             <li class="layui-nav-item">
                 <a href="/main/help"><i class="fa fa-question-circle"></i></a>
             </li>
@@ -159,10 +162,17 @@
                                                     <input type="password" name="new_password" lay-verify="required" lay-reqtext="新的密码不能为空" placeholder="请输入新的密码"  value="" class="layui-input">
                                                 </div>
                                             </li>
+                                            <li class="layui-form-item">
+                                                <label class="layui-form-label required">确认密码</label>
+                                                <div class="layui-input-block">
+                                                    <input type="password" name="again_password" lay-verify="required" lay-reqtext="确认密码不能为空" placeholder="请输入确认密码"  value="" class="layui-input">
+                                                </div>
+                                            </li>
                                         </ul>
                                         <div class="layui-form-item">
                                             <div class="layui-input-block">
                                                 <button class="layui-btn" lay-submit lay-filter="saveBtn" style="background-color: rgb(102,153,204);">确认保存</button>
+                                                <a type="text" id="msg" style="color: red; font-weight: bold"></a>
                                             </div>
                                         </div>
 
@@ -190,6 +200,15 @@
             form = layui.form,
             layer = layui.layer;
 
+        form.on('submit(saveBtn)',function (data) {
+            data = data.field;
+            if(data.new_password != data.again_password){
+                layer.msg('两次密码不一致',function () {
+                    document.getElementById('msg').innerHTML='';
+                });
+                return false;
+            }
+        });
     });
 </script>
 </body>
