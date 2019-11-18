@@ -26,7 +26,7 @@ public class UserService {
         if(list.size() == 0){
             return "u001";
         }
-        list.sort(Comparator.comparing(HelloUser::getName));
+        list.sort(Comparator.comparing(HelloUser::getId));
         String maxid = list.get(list.size()-1).getId().substring(1);
         int maxnum = Integer.parseInt(maxid);
         return "u"+new DecimalFormat("000").format(maxnum+1);
