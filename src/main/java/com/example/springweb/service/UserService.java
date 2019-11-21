@@ -77,11 +77,6 @@ public class UserService {
         userMapper.updateByID(temp);
     }
 
-    public void DeleteByID(String id){
-        userMapper.deleteByID(id);
-        System.out.println("AfterDelete:"+userMapper.getOne(id));
-    }
-
 
     public String Login(String name,String pass){
         return userMapper.Login(name,pass);

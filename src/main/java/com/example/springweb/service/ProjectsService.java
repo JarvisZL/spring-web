@@ -22,10 +22,6 @@ public class ProjectsService {
         return projectsMapper.getByuid(uid);
     }
 
-    public Projects getBypid(String pid){
-        return projectsMapper.getBypid(pid);
-    }
-
     public void UpdateStatbypid(boolean mchecked,boolean mallcheck, boolean mapncheck, boolean mapccheck,
                                 boolean mapscheck,int mapplevel, boolean maplcheck,String mpid){
         Projects app = projectsMapper.getBypid(mpid);
@@ -40,7 +36,13 @@ public class ProjectsService {
         projectsMapper.UpdateStatbypid(app);
     }
 
+    public Projects getBypid(String pid){
+        return projectsMapper.getBypid(pid);
+    }
 
 
+    public void init(){
+        projectsMapper.init();
+    }
 
 }
